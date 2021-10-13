@@ -39,31 +39,37 @@ const images = [
     label: 'Audi',
     imgPath: AudiImg,
     price: 100,
+    rented: 3,
   },
   {
     label: 'BMW',
     imgPath: BmwImg,
     price: 120,
+    rented: 19,
   },
   {
     label: 'Lambo',
     imgPath: LamboImg,
     price: 800,
+    rented: 0,
   },
   {
     label: 'Marcedes',
     imgPath: MercedesImg,
     price: 200,
+    rented: 5,
   },
   {
     label: 'RR',
     imgPath: RRImg,
     price: 400,
+    rented: 1,
   },
   {
     label: 'Toyota',
     imgPath: ToyotaImg,
     price: 80,
+    rented: 1,
   },
 ];
 
@@ -90,7 +96,7 @@ function App() {
     <div className="App">
       <h1>Car Rental Services</h1>
       <Box sx={{ display: 'flex', flexDirection: 'row', justifyContent: 'flex-end', alignItems: 'center' }}>
-        <Typography>Show price</Typography>
+        <Typography>Show how many times car is rented</Typography>
         <Switch checked={expanded} onChange={() => setExpanded(!expanded)} />
       </Box>
       <Box sx={{ maxWidth: "100%", flexGrow: 1 }}>
@@ -122,7 +128,7 @@ function App() {
             }}>
             {expanded && (
               <div>
-                <Typography>${images[activeStep].price}</Typography>
+                <Typography>Rented {images[activeStep].rented} times</Typography>
               </div>
             )}
           </Paper>
