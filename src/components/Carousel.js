@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import Typography from '@mui/material/Typography';
 import MobileStepper from '@mui/material/MobileStepper';
 import SwipeableViews from 'react-swipeable-views';
@@ -19,7 +20,7 @@ import { useTheme } from '@mui/material/styles';
 
 const AutoPlaySwipeableViews = autoPlay(SwipeableViews);
 
-const images = [
+export const data = [
     {
         label: 'Audi',
         imgPath: AudiImg,
@@ -61,7 +62,7 @@ const images = [
 function Carousel({ expanded }) {
     const theme = useTheme();
     const [activeStep, setActiveStep] = React.useState(0);
-    const maxSteps = images.length;
+    const maxSteps = data.length;
 
     const handleNext = () => {
         setActiveStep((prevActiveStep) => prevActiveStep + 1);
@@ -92,7 +93,7 @@ function Carousel({ expanded }) {
                         textAlign: 'left'
                     }}
                 >
-                    <Typography>{images[activeStep].label}</Typography>
+                    <Typography>{data[activeStep].label}</Typography>
                 </Paper>
                 <Paper
                     square
@@ -108,7 +109,7 @@ function Carousel({ expanded }) {
                         <Typography style={{
                             flex: 1,
                             textAlign: 'right',
-                        }}>Rented {images[activeStep].rented} times</Typography>
+                        }}>Rented {data[activeStep].rented} times</Typography>
                     )}
                 </Paper>
             </Box>
@@ -119,24 +120,27 @@ function Carousel({ expanded }) {
                     onChangeIndex={handleStepChange}
                     enableMouseEvents
                 >
-                    {images.map((step, index) => (
+                    {data.map((step, index) => (
                         <div key={step.label} style={{
                             width: '100%',
                             height: '100%',
                         }}>
                             {Math.abs(activeStep - index) <= 2 ? (
-                                <Box
-                                    component="img"
-                                    sx={{
-                                        display: 'block',
-                                        overflow: 'hidden',
-                                        width: '100%',
-                                        height: '73vh',
-                                        objectFit: 'cover'
-                                    }}
-                                    src={step.imgPath}
-                                    alt={step.label}
-                                />
+                                <Link to={"/car/" + step.label}>
+                                    <Box
+                                        component="img"
+                                        sx={{
+                                            display: 'block',
+                                            overflow: 'hidden',
+                                            width: '100%',
+                                            height: '73vh',
+                                            objectFit: 'cover',
+                                            cursor: 'pointer'
+                                        }}
+                                        src={step.imgPath}
+                                        alt={step.label}
+                                    />
+                                </Link>
                             ) : null}
                         </div>
                     ))}
