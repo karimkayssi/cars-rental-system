@@ -1,8 +1,9 @@
 import { Button } from '@mui/material';
 import React from 'react';
+import { Link, useHistory } from 'react-router-dom';
+import { Field, Form, Formik, FormikProps } from 'formik';
 
 const Login = (props) => {
-
 
     const {
         email,
@@ -17,10 +18,14 @@ const Login = (props) => {
         passwordError
     } = props;
 
+    const history = useHistory();
+
     return (
         <section className="login">
-            <div className="loginContainer">
-                <label>Username</label>
+            <form className="loginContainer" onSubmit={(e) => {
+                history.push('/');
+            }}>
+                <label>Email</label>
                 <input
                     type="text"
                     autoFocus
@@ -37,23 +42,9 @@ const Login = (props) => {
                     onChange={(e) => setPassword(e.target.value)}
                 />
                 <p className="errorMsg">{passwordError}</p>
-                <div className="btnContainer">
-                    {hasAccount && (
-                        <>
-                            <button onClick={handleLogin}>Sign in</button>
-                            <p>
-                                Don't have an account ?
-                                <span onClick={() => setHasAccount(!hasAccount)} >Sign up</span>
-                            </p>
-                            <button onClick={handleSignUp}>Sign up </button>
-                            <p>
-                                Have an account ?
-                                <span onClick={() => setHasAccount(!hasAccount)}>Sign in</span></p>
-                        </>
-                    )}
-                </div>
-                <Button variant="contained">Login</Button>
-            </div>
+                <br />
+                <Button type="submit" variant="contained">Login</Button>
+            </form>
         </section>
     );
 };

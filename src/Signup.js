@@ -1,5 +1,7 @@
 import { Button } from '@mui/material';
 import React, { useState } from 'react';
+import { Link, useHistory } from 'react-router-dom';
+import { Field, Form, Formik, FormikProps } from 'formik';
 
 const SignUp = (props) => {
 
@@ -12,9 +14,19 @@ const SignUp = (props) => {
     const [hasAccount, setHasAccount] = useState('');
     const [handleSignUp, setHandleSignUp] = useState('');
 
+    const history = useHistory();
+
     return (
+
         <section className="login">
-            <div className="loginContainer">
+            <form onSubmit={(e) => {
+                if (password != confirmPassword) {
+                    setPasswordError("Passwords do not match");
+                    e.preventDefault();
+                    return;
+                }
+                history.push('/');
+            }} className="loginContainer">
                 <label>Username</label>
                 <input
                     type="text"
@@ -31,6 +43,7 @@ const SignUp = (props) => {
                     required
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
+                    pattern="^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$"
                 />
                 <p className="errorMsg">{emailError}</p>
                 <label>Password</label>
@@ -49,23 +62,12 @@ const SignUp = (props) => {
                     onChange={(e) => setConfirmPassword(e.target.value)}
                 />
                 <p className="errorMsg">{passwordError}</p>
-                <div className="btnContainer">
-                    {hasAccount && (
-                        <>
-                            <button onClick={handleSignUp}>Sign in</button>
-                            <p>
-                                Don't have an account ?
-                                <span onClick={() => setHasAccount(!hasAccount)} >Sign up</span>
-                            </p>
-                            <button onClick={handleSignUp}>Sign up </button>
-                            <p>
-                                Have an account ?
-                                <span onClick={() => setHasAccount(!hasAccount)}>Sign in</span></p>
-                        </>
-                    )}
-                </div>
-                <Button variant="contained">SignUp</Button>
-            </div>
+                <br />
+                <Button type="submit" variant="contained">SignUp</Button>
+                <Link to="/login">
+                    <Button variant="text">Click to login</Button>
+                </Link>
+            </form>
         </section>
     );
 };
